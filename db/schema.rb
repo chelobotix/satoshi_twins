@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_27_233036) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_28_111822) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "currencies", force: :cascade do |t|
+    t.string "name"
+    t.string "symbol"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_currencies_on_name", unique: true
+    t.index ["symbol"], name: "index_currencies_on_symbol", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
