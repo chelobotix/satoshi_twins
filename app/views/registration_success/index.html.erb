@@ -1,0 +1,18 @@
+<% if @result == "true" %>
+  <div class="success-container">
+    <h1>
+      <%= I18n.t("registration_success") %>
+    </h1>
+    <div>
+      <%= image_tag 'sushi.png', alt: 'Satoshi Twins', width: '200px' %>
+      <%= image_tag 'sushi.png', alt: 'Satoshi Twins', width: '200px' %>
+    </div>
+    <%= link_to I18n.t("go_to_documentation"), root_path, class: 'btn btn-primary' %>
+  </div>
+<% else %>
+  <div class="success-container">
+    <h1>
+      <%= I18n.t("registration_failed") %>
+    </h1>
+  </div>
+<% end %>

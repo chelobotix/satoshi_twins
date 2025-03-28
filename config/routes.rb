@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+  root "home#index"
+
   # Devise Token Auth
   mount_devise_token_auth_for "User", at: "auth"
+
+  resources :registration_success, only: [ :index ]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
