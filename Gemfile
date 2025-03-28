@@ -64,3 +64,5 @@ group :development do
   gem "better_errors", "~> 2.10"
   gem "pry-byebug", "~> 3.10"
 end
+
+gem "rspec-rails", "~> 7.1"
