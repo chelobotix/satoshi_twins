@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class User < ActiveRecord::Base
-  include DeviseTokenAuth::Concerns::User
-
-  after_create :on_boarding
+  # after_create :on_boarding
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -11,7 +9,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable, :confirmable
 
   # Relationships
-  has_many :wallets
+  has_many :wallets, dependent: :destroy
+
+  include DeviseTokenAuth::Concerns::User
 
   private
 

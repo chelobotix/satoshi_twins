@@ -2,8 +2,8 @@ module ResultUtils
   module Builder
     private
 
-    def failure(message: 'error')
-      Result.new(success: false, error: message)
+    def failure(data: { status: "error" })
+      Result.new(success: false, error: data)
     end
 
     def success(data: {})

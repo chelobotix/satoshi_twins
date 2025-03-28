@@ -1,4 +1,6 @@
 class OnBoardingService
+  include ResultUtils::Builder
+
   INITIAL_CURRENCIES = {
     bitcoin: 0.98765432,
     usd: 1000.00
@@ -7,10 +9,17 @@ class OnBoardingService
 
   def initialize(user)
     @user = user
+    @error = false
   end
 
   def call
     handle_welcome_wallets
+
+    if @error
+      failure(data: { status: "failed", details: "Error creating welcome wallets" })
+    else
+      success(data: { status: "success", details: "Welcome wallets created" })
+    end
   end
 
   private
@@ -23,25 +32,28 @@ class OnBoardingService
     end
 
   rescue ActiveRecord::RecordInvalid  => e
-    add_error_log("Wallet: #{e.message }")
-    raise ActiveRecord::Rollback
+    handle_error("Wallet: #{e.message }")
   rescue ActiveRecord::RecordNotFound=> e
-    add_error_log("Record not found: #{e.message }")
-    raise ActiveRecord::Rollback
+    handle_error("Record not found: #{e.message }")
   rescue ActiveRecord::RecordInvalid => e
-    add_error_log("Record invalid: #{e.message }")
-    raise ActiveRecord::Rollback
+    handle_error("Record invalid: #{e.message }")
   rescue StandardError => e
-    add_error_log("Can not complete the registration: #{e.message }")
-    raise ActiveRecord::Rollback
+    handle_error("Can not complete the registration: #{e.message }")
   end
 
   def create_wallet(currency_name, amount)
-    currency = Currency.find_by!(name: currency_name)
-    Wallet.create!(user: @user, currency: currency, amount: amount)
+    currency = Currency.find_by(name: currency_name)
+
+    Wallet.create!(user: @user, currency:, amount:)
   end
 
   def add_error_log(message)
     Rails.logger.error("⚠️ >>>>>-----> #{message}\n")
+  end
+
+  def handle_error(message)
+    add_error_log(message)
+    @user.destroy
+    @error = true
   end
 end

@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root "home#index"
 
   # Devise Token Auth
-  mount_devise_token_auth_for "User", at: "auth"
+  mount_devise_token_auth_for "User", at: "auth", controllers: {
+    registrations: "custom_registrations"
+  }
 
   resources :registration_success, only: [ :index ]
 
