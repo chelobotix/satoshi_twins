@@ -10,8 +10,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  # Relationships
+  has_many :wallets
+
   private
+
   def on_boarding
     OnBoardingService.new(self).call
+    Rails.logger.error("☢️ >>>>>-----> welcome wallets created for user #{email}")
   end
 end

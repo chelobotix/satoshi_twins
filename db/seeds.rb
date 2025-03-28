@@ -9,4 +9,5 @@
 #   end
 
 
+Currency.create!(name: 'usd', symbol: 'US$')
 Currency.create!(name: 'bitcoin', symbol: 'BTC')
