@@ -28,4 +28,6 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  registration_success: "Satoshi Twins Say: Welcome on Board!"
+  registration_failed: "Something bad happened!"
+  go_to_documentation: "Go to documentation"
