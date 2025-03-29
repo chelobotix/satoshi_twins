@@ -1,9 +1,9 @@
-class CryptoPriceTrackerController < ApplicationController
+class Api::V1::CryptoPriceTrackerController < ApplicationController
   def index
     begin
       coingecko_service = Coingecko::CoingeckoService.new(
-        params[:crypto_currency_name],
-        params[:target_currency_name]
+        params[:source_coin],
+        params[:target_coin]
       )
       result = coingecko_service.call
     rescue ArgumentError => e
