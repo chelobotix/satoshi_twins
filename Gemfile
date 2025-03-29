@@ -47,6 +47,8 @@ gem "devise_token_auth", "~> 1.2"
 # Cors
 gem "rack-cors", "~> 2.0", require: "rack/cors"
 
+gem "httparty", "~> 0.23.1"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -69,3 +71,5 @@ group :development do
   gem "better_errors", "~> 2.10"
   gem "pry-byebug", "~> 3.10"
 end
+
+
