@@ -45,6 +45,112 @@ paths:
           description: no authorized
         '400':
           description: missing parameters
+  "/api/v1/users/{user_id}/wallet_exchanges":
+    get:
+      summary: List all wallet exchanges for the user
+      tags:
+      - Wallet Exchanges
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: Token
+        schema:
+          type: string
+      - name: user_id
+        in: path
+        required: true
+        description: User ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: exchanges found
+        '401':
+          description: unauthorized
+    post:
+      summary: Create a new wallet exchange
+      tags:
+      - Wallet Exchanges
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: Token
+        schema:
+          type: string
+      - name: user_id
+        in: path
+        required: true
+        description: User ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: exchange created
+        '400':
+          description: invalid parameters
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                exchange:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      example: 1.5
+                    source_coin:
+                      type: string
+                      example: bitcoin
+                    target_coin:
+                      type: string
+                      example: usd
+                  required:
+                  - amount
+                  - source_coin
+                  - target_coin
+  "/api/v1/users/{user_id}/wallet_exchanges/{id}":
+    get:
+      summary: Get a specific wallet exchange
+      tags:
+      - Wallet Exchanges
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: Token
+        schema:
+          type: string
+      - name: user_id
+        in: path
+        required: true
+        description: User ID
+        schema:
+          type: integer
+      - name: id
+        in: path
+        required: true
+        description: Exchange ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: exchange found
+        '401':
+          description: unauthorized
+        '404':
+          description: exchange not found
 servers:
 - url: http://localhost:3000
   variables:
