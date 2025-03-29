@@ -1,0 +1,52 @@
+---
+openapi: 3.0.1
+info:
+  title: SATOSHI TWINS API V1
+  version: v1
+components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- bearer_auth: []
+paths:
+  "/api/v1/crypto_price_tracker":
+    get:
+      summary: Get the cryptocurrency actual price
+      tags:
+      - Crypto Price Tracker
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: Token
+        schema:
+          type: string
+      - name: source_coin
+        in: query
+        required: true
+        description: 'Source coin (ex: bitcoin)'
+        schema:
+          type: string
+      - name: target_coin
+        in: query
+        required: true
+        description: 'Target coin (ex: usd)'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: price found
+        '401':
+          description: no authorized
+        '400':
+          description: missing parameters
+servers:
+- url: http://localhost:3000
+  variables:
+    defaultHost:
+      default: http://localhost:3000
