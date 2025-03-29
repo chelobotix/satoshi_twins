@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_29_132614) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_29_140332) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -62,6 +62,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_29_132614) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  create_table "wallet_exchanges", force: :cascade do |t|
+    t.decimal "wallet_amount_before", precision: 30, scale: 12, null: false
+    t.decimal "wallet_amount_after", precision: 30, scale: 12, null: false
+    t.bigint "exchange_id", null: false
+    t.bigint "wallet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exchange_id"], name: "index_wallet_exchanges_on_exchange_id"
+    t.index ["wallet_id"], name: "index_wallet_exchanges_on_wallet_id"
+  end
+
   create_table "wallets", force: :cascade do |t|
     t.decimal "amount", precision: 30, scale: 12, default: "0.0", null: false
     t.boolean "active", default: true, null: false
@@ -75,6 +86,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_29_132614) do
 
   add_foreign_key "exchanges", "currencies", column: "receive_currency_id"
   add_foreign_key "exchanges", "currencies", column: "send_currency_id"
+  add_foreign_key "wallet_exchanges", "exchanges"
+  add_foreign_key "wallet_exchanges", "wallets"
   add_foreign_key "wallets", "currencies"
   add_foreign_key "wallets", "users"
 end

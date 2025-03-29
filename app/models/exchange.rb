@@ -1,4 +1,12 @@
 class Exchange < ApplicationRecord
+  # Relationships
+  has_many :wallet_exchanges, dependent: :destroy
+  has_many :wallets, through: :wallet_exchanges
+
+  # Validations
+  validates :send_amount, presence: true, numericality: { greater_than: 0 }
+  validates :receive_amount, presence: true, numericality: { greater_than: 0 }
+
   aasm do
     state :pending, initial: true
     state :processing
