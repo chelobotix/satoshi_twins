@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :crypto_price_tracker, only: [ :index ]
       resources :wallets, only: %i[ index show ]
-      resources :exchanges, only: %i[ index create ]
+      resources :wallet_exchanges, only: %i[ index create ]
     end
   end
 

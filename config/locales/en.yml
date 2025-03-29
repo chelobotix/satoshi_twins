@@ -37,3 +37,13 @@ en:
     target_currency_miss: "Target currency name param missing"
     error_response: "Coingecko error response"
     invalid_response: "Invalid JSON response"
+    
+  exchange:
+    miss_source_crypto: "Source crypto currency name missing"
+    miss_target_crypto: "Target crypto currency name missing"
+    negative_amount: "Amount must be present and positive"
+    no_rate_found: "No rate found"
+    invalid_currencies: "Invalid currencies. Allowed: %{allowed}"
+    wallet_not_found: "Currency wallet not found"
+    insufficient_funds: "Insufficient funds, available: %{available}"
+    invalid_exchange_rate: "Invalid exchange rate"

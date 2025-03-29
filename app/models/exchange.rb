@@ -1,7 +1,10 @@
 class Exchange < ApplicationRecord
+  include AASM
+
   # Relationships
   has_many :wallet_exchanges, dependent: :destroy
-  has_many :wallets, through: :wallet_exchanges
+  has_many :source_wallets, through: :wallet_exchanges
+  has_many :target_wallets, through: :wallet_exchanges
 
   # Validations
   validates :send_amount, presence: true, numericality: { greater_than: 0 }

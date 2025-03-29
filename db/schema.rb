@@ -63,14 +63,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_29_140332) do
   end
 
   create_table "wallet_exchanges", force: :cascade do |t|
-    t.decimal "wallet_amount_before", precision: 30, scale: 12, null: false
-    t.decimal "wallet_amount_after", precision: 30, scale: 12, null: false
+    t.decimal "source_wallet_amount_before", precision: 30, scale: 12, null: false
+    t.decimal "source_wallet_amount_after", precision: 30, scale: 12, null: false
+    t.decimal "target_wallet_amount_before", precision: 30, scale: 12, null: false
+    t.decimal "target_wallet_amount_after", precision: 30, scale: 12, null: false
     t.bigint "exchange_id", null: false
-    t.bigint "wallet_id", null: false
+    t.bigint "source_wallet_id", null: false
+    t.bigint "target_wallet_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["exchange_id", "source_wallet_id", "target_wallet_id"], name: "idx_wallet_exchanges_unique", unique: true
     t.index ["exchange_id"], name: "index_wallet_exchanges_on_exchange_id"
-    t.index ["wallet_id"], name: "index_wallet_exchanges_on_wallet_id"
+    t.index ["source_wallet_id"], name: "index_wallet_exchanges_on_source_wallet_id"
+    t.index ["target_wallet_id"], name: "index_wallet_exchanges_on_target_wallet_id"
   end
 
   create_table "wallets", force: :cascade do |t|
@@ -87,7 +92,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_29_140332) do
   add_foreign_key "exchanges", "currencies", column: "receive_currency_id"
   add_foreign_key "exchanges", "currencies", column: "send_currency_id"
   add_foreign_key "wallet_exchanges", "exchanges"
-  add_foreign_key "wallet_exchanges", "wallets"
+  add_foreign_key "wallet_exchanges", "wallets", column: "source_wallet_id"
+  add_foreign_key "wallet_exchanges", "wallets", column: "target_wallet_id"
   add_foreign_key "wallets", "currencies"
   add_foreign_key "wallets", "users"
 end

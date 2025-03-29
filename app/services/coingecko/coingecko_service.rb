@@ -2,14 +2,13 @@ module Coingecko
   class CoingeckoService
     include ResultUtils::Builder
 
-    CRYPTO_LIST = %w[bitcoin dogecoin].freeze
+    CRYPTO_LIST = %w[bitcoin].freeze
     CURRENCY_LIST = %w[usd].freeze
     private_constant :CRYPTO_LIST
     private_constant :CURRENCY_LIST
 
     def initialize(crypto_currency_name, target_currency_name)
-      raise ArgumentError, I18n.t("coingecko.crypto_currency_miss") if crypto_currency_name.blank?
-      raise ArgumentError, I18n.t("coingecko.target_currency_miss") if target_currency_name.blank?
+      validate_params!(crypto_currency_name, target_currency_name)
 
       @crypto_currency_name = crypto_currency_name.split(",")
       @target_currency_name = target_currency_name.split(",")
@@ -108,6 +107,11 @@ module Coingecko
       elsif type == :currency
         @target_currency_name.join(",")
       end
+    end
+
+    def validate_params!(crypto_currency_name, target_currency_name)
+      raise ArgumentError, I18n.t("coingecko.crypto_currency_miss") if crypto_currency_name.blank?
+      raise ArgumentError, I18n.t("coingecko.target_currency_miss") if target_currency_name.blank?
     end
   end
 end
