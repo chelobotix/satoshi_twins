@@ -51,6 +51,11 @@ module ExchangeModule
     end
 
     def validate_currencies
+      unless  @source_crypto.is_a?(Currency) && @target_crypto.is_a?(Currency)
+        @errors << I18n.t("exchange.invalid_currencies", allowed: (CRYPTO_LIST + CURRENCY_LIST).join(", "))
+        return
+      end
+
       unless CRYPTO_LIST.include?(@source_crypto.name) && CURRENCY_LIST.include?(@target_crypto.name)
         @errors << I18n.t("exchange.invalid_currencies", allowed: (CRYPTO_LIST + CURRENCY_LIST).join(", "))
       end

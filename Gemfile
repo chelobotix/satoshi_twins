@@ -68,13 +68,15 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.4"
   gem "faker", "~> 3.5"
   gem "webmock", "~> 3.25"
+
+  # Debugging
+  gem "pry-byebug", "~> 3.10"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem "better_errors", "~> 2.10"
-  gem "pry-byebug", "~> 3.10"
 end
 
 gem "active_model_serializers", "~> 0.10.15"

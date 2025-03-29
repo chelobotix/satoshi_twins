@@ -32,12 +32,14 @@ module ExchangeModule
         update_wallets
       end
 
-      @exchange&.update!(aasm_state: :completed)
+      @exchange&.complete!
 
     rescue ActiveRecord::RecordInvalid => e
       @errors << e.message
+      @exchange&.fail!
     rescue StandardError  => e
       @errors << e.message
+      @exchange&.fail!
     end
 
     def create_exchange

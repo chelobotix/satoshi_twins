@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe OnBoardingService, type: :service do
   let(:user) { create(:user) }
-  # let(:currency) { create(:currency) }
 
   describe '#call' do
     context 'should success' do
