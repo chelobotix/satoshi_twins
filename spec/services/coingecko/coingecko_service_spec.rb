@@ -1,53 +1,91 @@
 require 'rails_helper'
+require 'ostruct'
 
 RSpec.describe Coingecko::CoingeckoService, type: :service do
+  let(:crypto_currency) { "bitcoin" }
+  let(:target_currency) { "usd" }
+  let(:service) { described_class.new(crypto_currency, target_currency) }
+  let(:base_url) { "https://api.coingecko.com/api/v3" }
+
+  before do
+    allow(Rails.application.credentials).to receive(:coingecko).and_return(
+      double(
+        base_url: base_url,
+        api_key: "test_api_key"
+      )
+    )
+  end
+
   describe '#call' do
-    context 'when parameters are valid' do
-      it 'returns success with market data' do
-        service = described_class.new('bitcoin', 'usd')
+    context 'when the request is successful' do
+      before do
+        stub_request(:get, /#{base_url}\/simple\/price/)
+          .with(
+            headers: {
+              'Accept' => 'application/json'
+            }
+          )
+          .to_return(
+            status: 200,
+            body: {
+              "bitcoin" => {
+                "usd" => 50000.0000,
+                "last_updated_at" => 1234567890
+              }
+            }.to_json,
+            headers: { 'Content-Type' => 'application/json' }
+          )
+      end
+
+      it 'returns success with price data' do
         result = service.call
 
         expect(result.success?).to be_truthy
-        expect(result.data[:status]).to eq('success')
-        expect(result.data[:data]).to include('bitcoin')
+        expect(result.data[:status]).to eq("success")
+        expect(result.data[:data][:prices]).to include({ "bitcoin"=>{ "usd"=>"50.000,00", "last_updated_at"=>1234567890 } })
       end
     end
 
-    context 'when crypto currency is missing' do
-      it 'raises ArgumentError' do
-        expect { described_class.new(nil, 'usd') }.to raise_error(ArgumentError)
+    context 'when the request fails' do
+      before do
+        stub_request(:get, /#{base_url}\/simple\/price/)
+          .to_return(status: 500, body: "Internal Server Error")
       end
-    end
 
-    context 'when target currency is missing' do
-      it 'raises ArgumentError' do
-        expect { described_class.new('bitcoin', nil) }.to raise_error(ArgumentError)
+      it 'returns failure with error message' do
+        result = service.call
+
+        expect(result.success?).to be_falsey
+        expect(result.error[:status]).to eq("failed")
+        expect(result.error[:error]).to include("Coingecko error response")
       end
     end
 
     context 'when currency is not allowed' do
+      let(:crypto_currency) { "invalid_currency" }
+
       it 'returns failure with invalid currency message' do
-        service = described_class.new('invalid_currency', 'usd')
         result = service.call
 
         expect(result.success?).to be_falsey
-        expect(result.data[:status]).to eq('failed')
-        expect(result.data[:details]).to eq('Invalid currency')
+        expect(result.error[:status]).to eq("failed")
+        expect(result.error[:details]).to eq("Invalid currency")
       end
     end
 
-    context 'when API request fails' do
-      before do
-        allow(HTTParty).to receive(:get).and_raise(StandardError.new('API Error'))
+    context 'when crypto currency is missing' do
+      let(:crypto_currency) { "" }
+
+      it 'raises ArgumentError' do
+        expect { service }.to raise_error(ArgumentError)
       end
+    end
 
-      it 'returns failure with error details' do
-        service = described_class.new('bitcoin', 'usd')
-        result = service.call
+    context 'when target currency is missing' do
+      let(:target_currency) { "" }
 
-        expect(result.success?).to be_falsey
-        expect(result.data[:status]).to eq('failed')
-        expect(result.data[:details]).to eq('API Error')
+      it 'raises ArgumentError' do
+        expect { service }.to raise_error(ArgumentError)
       end
     end
   end

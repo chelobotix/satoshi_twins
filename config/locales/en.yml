@@ -35,5 +35,5 @@ en:
   coingecko:
     crypto_currency_miss: "Crypto currency name param missing"
     target_currency_miss: "Target currency name param missing"
-    error_response: "Error response"
+    error_response: "Coingecko error response"
     invalid_response: "Invalid JSON response"

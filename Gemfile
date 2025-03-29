@@ -63,6 +63,7 @@ group :development, :test do
   gem "rspec-rails", "~> 7.1"
   gem "factory_bot_rails", "~> 6.4"
   gem "faker", "~> 3.5"
+  gem "webmock", "~> 3.25"
 end
 
 group :development do
@@ -71,5 +72,3 @@ group :development do
   gem "better_errors", "~> 2.10"
   gem "pry-byebug", "~> 3.10"
 end
-
-

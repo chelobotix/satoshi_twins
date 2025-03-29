@@ -71,7 +71,7 @@ module Coingecko
       if response.code == 200 && !(response.body.nil? || response.body.empty?)
         handle_response(response.body)
       else
-        failure(data: { status: "fail", error: I18n.t("coingecko.error_response"), details: response.body })
+        failure(data: { status: "failed", error: I18n.t("coingecko.error_response"), details: response.body })
       end
     end
 
@@ -79,12 +79,12 @@ module Coingecko
       begin
         prices = JSON.parse(response).with_indifferent_access
       rescue JSON::ParserError
-        failure(data: { status: "fail", error: I18n.t("coingecko.invalid_response") })
+        failure(data: { status: "failed", error: I18n.t("coingecko.invalid_response") })
       end
 
       format_price(prices)
 
-      success(data: { status: "success", data: prices })
+      success(data: { status: "success", data: { prices: [ prices ] } })
     end
 
     def format_price(prices)
