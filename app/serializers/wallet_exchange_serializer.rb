@@ -22,6 +22,7 @@ class WalletExchangeSerializer < ActiveModel::Serializer
     CurrencyFormat.format(amount: object.target_wallet_amount_after)
   end
 
+  belongs_to :user
   belongs_to :exchange
   belongs_to :source_wallet, class_name: "Wallet"
   belongs_to :target_wallet, class_name: "Wallet"

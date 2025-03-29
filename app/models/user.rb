@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 
   # Relationships
   has_many :wallets, dependent: :destroy
+  has_many :wallet_exchanges, dependent: :destroy
 
   include DeviseTokenAuth::Concerns::User
 

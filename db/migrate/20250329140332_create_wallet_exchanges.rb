@@ -7,6 +7,7 @@ class CreateWalletExchanges < ActiveRecord::Migration[8.0]
       t.decimal :target_wallet_amount_after, precision: 30, scale: 12, null: false
 
 
+      t.references :user, null: false, foreign_key: true
       t.references :exchange, null: false, foreign_key: true
       t.references :source_wallet, null: false, foreign_key: { to_table: :wallets }
       t.references :target_wallet, null: false, foreign_key: { to_table: :wallets }

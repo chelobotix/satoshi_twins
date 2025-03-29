@@ -47,3 +47,4 @@ en:
     wallet_not_found: "Currency wallet not found"
     insufficient_funds: "Insufficient funds, available: %{available}"
     invalid_exchange_rate: "Invalid exchange rate"
+    invalid_user: "Invalid user"

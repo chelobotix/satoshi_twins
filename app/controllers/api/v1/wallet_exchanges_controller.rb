@@ -30,7 +30,7 @@ class Api::V1::WalletExchangesController < ApplicationController
       result = exchange_service.call
 
       if result.success?
-        render(json: result.data[:wallet_exchange], include: %w[source_wallet.currency target_wallet.currency exchange], status: :ok)
+        render(json: result.data[:wallet_exchange], include: %w[user exchange source_wallet.currency target_wallet.currency], status: :ok)
       else
         render(json: result.error, status: :bad_request)
       end
