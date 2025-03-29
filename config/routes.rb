@@ -8,7 +8,13 @@ Rails.application.routes.draw do
 
   resources :registration_success, only: [ :index ]
 
-  resources :crypto_price_tracker, only: [ :index ]
+  namespace :api do
+    namespace :v1 do
+      resources :crypto_price_tracker, only: [ :index ]
+      resources :exchange, only: [ :index ]
+    end
+  end
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -1,4 +1,4 @@
-class CryptoPriceTrackerController < ApplicationController
+class Api::V1::CryptoPriceTrackerController < ApplicationController
   def index
     begin
       coingecko_service = Coingecko::CoingeckoService.new(

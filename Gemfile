@@ -47,7 +47,11 @@ gem "devise_token_auth", "~> 1.2"
 # Cors
 gem "rack-cors", "~> 2.0", require: "rack/cors"
 
+# HTTP client
 gem "httparty", "~> 0.23.1"
+
+# State Machine
+gem "aasm", "~> 5.5"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
