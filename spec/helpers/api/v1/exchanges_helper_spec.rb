@@ -10,6 +10,6 @@ require 'rails_helper'
 #     end
 #   end
 # end
-RSpec.describe Api::V1::ExchangeHelper, type: :helper do
+RSpec.describe Api::V1::ExchangesHelper, type: :helper do
   pending "add some examples to (or delete) #{__FILE__}"
 end

@@ -11,7 +11,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :crypto_price_tracker, only: [ :index ]
-      resources :exchange, only: [ :index ]
+      resources :wallets, only: [ :index ]
+      resources :exchanges, only: %i[ index create ]
     end
   end
 
