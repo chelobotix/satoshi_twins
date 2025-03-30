@@ -1,7 +1,8 @@
 # Satoshi Twins API
 
 <div align="center">
-  <img  src="https://github.com/user-attachments/assets/6d383814-3c4c-4d33-9738-7798defd4f81" alt="logo" width="1080"  height="auto" />
+  <img  src="https://github.com/user-attachments/assets/6d383814-3c4c-4d33-9738-7798defd4f81" alt="logo" width="200"  height="auto" />
+  <img  src="https://github.com/user-attachments/assets/6d383814-3c4c-4d33-9738-7798defd4f81" alt="logo" width="200"  height="auto" />
   <br/>
 
 <h3><b>Satoshi Twins API</b></h3>
@@ -14,6 +15,7 @@
     - [Tech Stack](#tech-stack)
     - [Key Features](#key-features)
 - [🧑🏻‍💻 Live Demo](#live-demo)
+- [🧑🏻‍💻 Data Base Schema](#dbschema)
 - [💻 Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Clone](#prerequisites)
@@ -28,10 +30,6 @@
 # 📖 Satoshi Twins API Project <a name="about-project"></a>
 
 > Satoshi Twins Project is an API designed to handle cryptocurrency conversions seamlessly. It provides real-time exchange rates and ensures accurate calculations for financial applications.
-
-## Walkthrough Video <a  name="walkthrough-video"></a>
-
-[Check the video]([Video Presentation](https://drive.google.com/file/d/1AEpZPDU_spbRA04VjtqT2W8ktxicprvQ/view?usp=share_link))
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -70,7 +68,12 @@
 
 ## 🧑🏻‍💻 Live Demo <a name="live-demo"></a>
 
-[https://satoshitwins-production.up.railway.app/]([https://satoshitwins-production.up.railway.app/](https://satoshitwins-production.up.railway.app/))
+[https://satoshitwins-production.up.railway.app/](https://satoshitwins-production.up.railway.app/)
+
+## 🧑🏻‍💻 Data Base Schema <a name="dbschema"></a>
+
+![image](https://github.com/user-attachments/assets/d80aa766-abf2-44a2-a572-0eeca0d6606a)
+
 
 ## 💻 Getting Started <a name="getting-started"></a>
 
@@ -130,10 +133,15 @@ Login in:
   }
 ```
 Copy the token generated in the response headers:
+![Pasted Graphic 1](https://github.com/user-attachments/assets/0f815d00-1527-424d-b485-3ad6781baa0c)
+
+Use it in your requests headers:
+![Pasted Graphic 2](https://github.com/user-attachments/assets/b84d502d-2e79-40a0-ab73-ad827490a910)
+
 
 
 Visit the endpoint:
-https://satoshitwins-production.up.railway.app/api-docs/index.html
+[https://satoshitwins-production.up.railway.app/api-docs/index.html](https://satoshitwins-production.up.railway.app/api-docs/index.html)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
