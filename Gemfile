@@ -54,7 +54,7 @@ gem "httparty", "~> 0.23.1"
 gem "aasm", "~> 5.5"
 
 # Documentation
-gem 'rswag'
+gem "rswag"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
