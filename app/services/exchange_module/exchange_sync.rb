@@ -20,6 +20,7 @@ module ExchangeModule
       if @errors.any?
         failure(data: { status: "failed", error: @errors.join(",") })
       else
+        @wallet_exchange&.reload
         success(data: { status: "success", wallet_exchange: @wallet_exchange })
       end
     end
@@ -32,14 +33,14 @@ module ExchangeModule
         update_wallets
       end
 
-      @exchange&.complete!
+      @exchange.complete!
 
     rescue ActiveRecord::RecordInvalid => e
       @errors << e.message
-      @exchange&.fail!
+      @exchange.fail! if @exchange.present?
     rescue StandardError  => e
       @errors << e.message
-      @exchange&.fail!
+      @exchange.fail! if @exchange.present?
     end
 
     def create_exchange

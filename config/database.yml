@@ -77,22 +77,26 @@ test:
 #
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
-#
+#satoshi_twins_production
+#production:
+#  primary: &primary_production
+#    <<: *default
+#    database: satoshi_twins_production
+#    username: satoshi_twins
+#    password: <%#= ENV["SATOSHI_TWINS_DATABASE_PASSWORD"] %>
+#  cache:
+#    <<: *primary_production
+#    database: satoshi_twins_production_cache
+#    migrations_paths: db/cache_migrate
+#  queue:
+#    <<: *primary_production
+#    database: satoshi_twins_production_queue
+#    migrations_paths: db/queue_migrate
+#  cable:
+#    <<: *primary_production
+#    database: satoshi_twins_production_cable
+#    migrations_paths: db/cable_migrate
 production:
-  primary: &primary_production
-    <<: *default
-    database: satoshi_twins_production
-    username: satoshi_twins
-    password: <%= ENV["SATOSHI_TWINS_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: satoshi_twins_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: satoshi_twins_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: satoshi_twins_production_cable
-    migrations_paths: db/cable_migrate
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
+  database: satoshi_twins_production

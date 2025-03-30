@@ -1,20 +1,11 @@
 class Api::V1::CryptoPriceTrackerController < ApplicationController
   def index
-    begin
-      coingecko_service = Coingecko::CoingeckoService.new(
-        params[:source_coin],
-        params[:target_coin]
-      )
-      result = coingecko_service.call
-    rescue ArgumentError => e
-      return render(json: { status: "fail", error: e.message }, status: :bad_request)
-    end
+    coingecko_service = Coingecko::CoingeckoService.new(params[:source_coin], params[:target_coin]).call
 
-
-    if result.success?
-      render(json: result.data, status: :ok)
+    if coingecko_service.success?
+      render(json: coingecko_service.data, status: :ok)
     else
-      render(json: result.error, status: :bad_request)
+      render(json: coingecko_service.error, status: :bad_request)
     end
   end
 end
