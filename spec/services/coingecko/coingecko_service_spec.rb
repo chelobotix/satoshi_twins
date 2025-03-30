@@ -6,14 +6,11 @@ RSpec.describe Coingecko::CoingeckoService, type: :service do
   let(:target_currency) { "usd" }
   let(:service) { described_class.new(crypto_currency, target_currency) }
   let(:base_url) { "https://api.coingecko.com/api/v3" }
+  let(:api_key) { "test_api_key" }
 
   before do
-    allow(Rails.application.credentials).to receive(:coingecko).and_return(
-      double(
-        base_url: base_url,
-        api_key: "test_api_key"
-      )
-    )
+    allow(ENV).to receive(:[]).with("COINGECKO_BASE_URL").and_return(base_url)
+    allow(ENV).to receive(:[]).with("COINGECKO_API_KEY").and_return(api_key)
   end
 
   describe '#call' do
@@ -22,7 +19,8 @@ RSpec.describe Coingecko::CoingeckoService, type: :service do
         stub_request(:get, /#{base_url}\/simple\/price/)
           .with(
             headers: {
-              'Accept' => 'application/json'
+              'Accept' => 'application/json',
+              'x-cg-demo-api-key' => api_key
             }
           )
           .to_return(
