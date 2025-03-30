@@ -10,7 +10,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       origins do |origin|
         return false if origin.nil?
 
-        allowed_domains = [ "shipedge.com" ]
+        allowed_domains = [ "https://satoshitwins-production.up.railway.app" ]
         begin
           uri = URI.parse(origin)
           allowed_domains.include?(uri.host) && uri.scheme == "https" && uri.user.nil? && uri.password.nil?
