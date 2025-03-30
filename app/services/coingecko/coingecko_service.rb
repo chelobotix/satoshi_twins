@@ -8,14 +8,13 @@ module Coingecko
     private_constant :CURRENCY_LIST
 
     def initialize(crypto_currency_name, target_currency_name)
-      validate_params!(crypto_currency_name, target_currency_name)
-
       @crypto_currency_name = crypto_currency_name.split(",")
       @target_currency_name = target_currency_name.split(",")
     end
 
     def call
-      validations
+      result = validations
+      return result unless result.success?
 
       get_market_data
     end
@@ -26,11 +25,13 @@ module Coingecko
       return failure(data: { status: "failed", details: I18n.t("invalid_params") }) unless valid_params?
 
       unless is_currency_allowed?
-        failure(data: { status: "failed", details: I18n.t(
+        return failure(data: { status: "failed", details: I18n.t(
           "exchange.invalid_currencies",
           allowed: (CRYPTO_LIST + CURRENCY_LIST).join(", ")) }
         )
       end
+
+      success
     end
 
     def get_market_data
@@ -112,8 +113,8 @@ module Coingecko
       end
     end
 
-    def valid_params?(crypto_currency_name, target_currency_name)
-      crypto_currency_name.present? && target_currency_name.present?
+    def valid_params?
+      @crypto_currency_name.present? && @target_currency_name.present?
     end
   end
 end

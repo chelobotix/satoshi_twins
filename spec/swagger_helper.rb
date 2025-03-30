@@ -44,6 +44,14 @@ RSpec.configure do |config|
               default: 'http://localhost:3000'
             }
           }
+        },
+        {
+          url: 'https://satoshitwins-production.up.railway.app',
+          variables: {
+            defaultHost: {
+              default: 'https://satoshitwins-production.up.railway.app'
+            }
+          }
         }
       ]
     }

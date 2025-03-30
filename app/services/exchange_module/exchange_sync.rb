@@ -32,14 +32,14 @@ module ExchangeModule
         update_wallets
       end
 
-      @exchange&.complete!
+      update_exchange_state(true)
 
     rescue ActiveRecord::RecordInvalid => e
       @errors << e.message
-      @exchange&.fail!
+      update_exchange_state(false)
     rescue StandardError  => e
       @errors << e.message
-      @exchange&.fail!
+      update_exchange_state(false)
     end
 
     def create_exchange
@@ -68,6 +68,12 @@ module ExchangeModule
       exchange_result = @amount * @exchange_rate
       @source_wallet&.update!(amount: @source_wallet&.amount - @amount)
       @target_wallet&.update!(amount: @target_wallet&.amount + exchange_result)
+    end
+
+    def update_exchange_state(completed)
+      completed ? @exchange.complete! : @exchange.fail!
+
+      @wallet_exchange.reload if @wallet_exchange.present?
     end
   end
 end

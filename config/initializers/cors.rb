@@ -5,7 +5,8 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     if Rails.env.development?
       origins "http://127.0.0.1:3000",
               "http://localhost:3000",
-              "http://localhost:4200"
+              "http://localhost:4200",
+              "https://satoshitwins-production.up.railway.app"
     elsif Rails.env.production?
       origins do |origin|
         return false if origin.nil?
