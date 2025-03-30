@@ -6,7 +6,6 @@ RSpec.describe 'Wallets API', type: :request do
       tags 'Wallets'
       produces 'application/json'
       security [ { bearer_auth: [] } ]
-      parameter name: :Authorization, in: :header, type: :string, required: true, description: 'Token'
       parameter name: :user_id, in: :path, type: :integer, required: true, description: 'User ID'
 
       response '200', 'wallets found' do
@@ -38,7 +37,6 @@ RSpec.describe 'Wallets API', type: :request do
       tags 'Wallets'
       produces 'application/json'
       security [ { bearer_auth: [] } ]
-      parameter name: :Authorization, in: :header, type: :string, required: true, description: 'Token'
       parameter name: :user_id, in: :path, type: :integer, required: true, description: 'User ID'
       parameter name: :id, in: :path, type: :integer, required: true, description: 'Wallet ID'
 

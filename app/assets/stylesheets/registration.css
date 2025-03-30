@@ -1,0 +1,15 @@
+.image-container {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    animation: separate 2.5s forwards;
+}
+
+@keyframes separate {
+    from {
+        gap: 0;
+    }
+    to {
+        gap: 80px;
+    }
+}

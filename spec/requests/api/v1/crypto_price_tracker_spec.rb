@@ -6,7 +6,6 @@ RSpec.describe 'Crypto Price Tracker API', type: :request do
       tags 'Crypto Price Tracker'
       produces 'application/json'
       security [ { bearer_auth: [] } ]
-      parameter name: :Authorization, in: :header, type: :string, required: true, description: 'Token'
       parameter name: :source_coin, in: :query, type: :string, required: true, description: 'Source coin (ex: bitcoin)'
       parameter name: :target_coin, in: :query, type: :string, required: true, description: 'Target coin (ex: usd)'
 
