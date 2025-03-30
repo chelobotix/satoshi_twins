@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  root "home#index"
+  root to: redirect("/api-docs")
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
 
   # Devise Token Auth
   mount_devise_token_auth_for "User", at: "auth", controllers: {
@@ -17,7 +19,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -1,0 +1,180 @@
+---
+openapi: 3.0.1
+info:
+  title: SATOSHI TWINS API V1
+  version: v1
+components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- bearer_auth: []
+paths:
+  "/api/v1/crypto_price_tracker":
+    get:
+      summary: Get the cryptocurrency actual price
+      tags:
+      - Crypto Price Tracker
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: source_coin
+        in: query
+        required: true
+        description: 'Source coin (ex: bitcoin)'
+        schema:
+          type: string
+      - name: target_coin
+        in: query
+        required: true
+        description: 'Target coin (ex: usd)'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: price found
+        '401':
+          description: no authorized
+        '400':
+          description: missing parameters
+  "/api/v1/users/{user_id}/wallet_exchanges":
+    get:
+      summary: List all wallet exchanges for the user
+      tags:
+      - Wallet Exchanges
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        description: User ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: exchanges found
+        '401':
+          description: unauthorized
+    post:
+      summary: Create a new wallet exchange
+      tags:
+      - Wallet Exchanges
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        description: User ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: exchange created
+        '400':
+          description: invalid parameters
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                exchange:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      example: 1.5
+                    source_coin:
+                      type: string
+                      example: bitcoin
+                    target_coin:
+                      type: string
+                      example: usd
+                  required:
+                  - amount
+                  - source_coin
+                  - target_coin
+  "/api/v1/users/{user_id}/wallet_exchanges/{id}":
+    get:
+      summary: Get a specific wallet exchange
+      tags:
+      - Wallet Exchanges
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        description: User ID
+        schema:
+          type: integer
+      - name: id
+        in: path
+        required: true
+        description: Exchange ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: exchange found
+        '401':
+          description: unauthorized
+        '404':
+          description: exchange not found
+  "/api/v1/users/{user_id}/wallets":
+    get:
+      summary: List all wallets for the user
+      tags:
+      - Wallets
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        description: User ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: wallets found
+        '401':
+          description: unauthorized
+  "/api/v1/users/{user_id}/wallets/{id}":
+    get:
+      summary: Get a specific wallet
+      tags:
+      - Wallets
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        description: User ID
+        schema:
+          type: integer
+      - name: id
+        in: path
+        required: true
+        description: Wallet ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: wallet found
+        '401':
+          description: unauthorized
+        '404':
+          description: wallet not found
+servers:
+- url: http://localhost:3000
+  variables:
+    defaultHost:
+      default: http://localhost:3000

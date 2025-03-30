@@ -9,7 +9,15 @@ class Api::V1::WalletsController < ApplicationController
     render(json: wallet, include: %w[currency user], status: :ok)
   end
 
-  # TODO: Create new wallets
+  # TODO: Create new wallets V.2
   def create
+  end
+
+  # TODO: Update wallets V.2
+  def update
+  end
+
+  # TODO: Destroy wallets V.2
+  def delete
   end
 end
