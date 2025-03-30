@@ -15,20 +15,31 @@ module Coingecko
     end
 
     def call
-      return failure(data: { status: "failed", details: "Invalid currency" }) unless is_currency_allowed?
+      validations
 
       get_market_data
     end
 
     private
 
+    def validations
+      return failure(data: { status: "failed", details: I18n.t("invalid_params") }) unless valid_params?
+
+      unless is_currency_allowed?
+        failure(data: { status: "failed", details: I18n.t(
+          "exchange.invalid_currencies",
+          allowed: (CRYPTO_LIST + CURRENCY_LIST).join(", ")) }
+        )
+      end
+    end
+
     def get_market_data
       handle_request
     end
 
     def handle_request
-      base_url = get_base_url
-      api_key = get_api_key
+      base_url = ENV["COINGECKO_BASE_URL"]
+      api_key = ENV["COINGECKO_API_KEY"]
 
       headers = create_headers(api_key)
       cryptos = join_currencies(:crypto)
@@ -37,14 +48,6 @@ module Coingecko
       uri = URI("#{base_url}/simple/price?ids=#{cryptos}&vs_currencies=#{targets}&&precision=4&include_last_updated_at=true")
 
       make_request(uri, headers)
-    end
-
-    def get_base_url
-      Rails.env.production? ? ENV["COINGECKO_URL"] : Rails.application.credentials.coingecko.base_url
-    end
-
-    def get_api_key
-      Rails.env.production? ? ENV["COINGECKO_API_KEY"] : Rails.application.credentials.coingecko.api_key
     end
 
     def create_headers(api_key)
@@ -109,9 +112,8 @@ module Coingecko
       end
     end
 
-    def validate_params!(crypto_currency_name, target_currency_name)
-      raise ArgumentError, I18n.t("coingecko.crypto_currency_miss") if crypto_currency_name.blank?
-      raise ArgumentError, I18n.t("coingecko.target_currency_miss") if target_currency_name.blank?
+    def valid_params?(crypto_currency_name, target_currency_name)
+      crypto_currency_name.present? && target_currency_name.present?
     end
   end
 end
