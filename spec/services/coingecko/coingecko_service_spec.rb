@@ -67,7 +67,7 @@ RSpec.describe Coingecko::CoingeckoService, type: :service do
 
         expect(result.success?).to be_falsey
         expect(result.error[:status]).to eq("failed")
-        expect(result.error[:details]).to eq("Invalid currency")
+        expect(result.error[:details]).to eq("Invalid currencies. Allowed: bitcoin, usd")
       end
     end
 
@@ -75,7 +75,8 @@ RSpec.describe Coingecko::CoingeckoService, type: :service do
       let(:crypto_currency) { "" }
 
       it 'raises ArgumentError' do
-        expect { service }.to raise_error(ArgumentError)
+        result = service.call
+        expect(result.success?).to be_falsey
       end
     end
 
@@ -83,7 +84,8 @@ RSpec.describe Coingecko::CoingeckoService, type: :service do
       let(:target_currency) { "" }
 
       it 'raises ArgumentError' do
-        expect { service }.to raise_error(ArgumentError)
+        result = service.call
+        expect(result.success?).to be_falsey
       end
     end
   end

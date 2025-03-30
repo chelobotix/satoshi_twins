@@ -43,17 +43,10 @@ class Api::V1::WalletExchangesController < ApplicationController
   private
 
   def get_rate_from_coingecko
-    begin
-      coingecko_service = Coingecko::CoingeckoService.new(
-        params[:exchange][:source_coin],
-        params[:exchange][:target_coin]
-      )
-      coingecko_result = coingecko_service.call
-    rescue ArgumentError => e
-      return render(json: { status: "fail", error: e.message }, status: :bad_request)
-    end
-
-    coingecko_result
+    Coingecko::CoingeckoService.new(
+      params[:exchange][:source_coin],
+      params[:exchange][:target_coin]
+    ).call
   end
 
   def serializer(record)
