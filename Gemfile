@@ -73,7 +73,7 @@ group :development, :test do
   gem "webmock", "~> 3.25"
 
   # Debugging
-  gem "pry-byebug", "~> 3.10"
+  gem "pry-byebug", "~> 3.11"
 end
 
 group :development do
