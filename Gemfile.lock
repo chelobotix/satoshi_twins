@@ -257,9 +257,10 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.1.12)
-    rack-cors (2.0.2)
-      rack (>= 2.0.0)
+    rack (3.1.15)
+    rack-cors (3.0.0)
+      logger
+      rack (>= 3.0.14)
     rack-session (2.1.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -461,7 +462,7 @@ DEPENDENCIES
   propshaft
   pry-byebug (~> 3.10)
   puma (>= 5.0)
-  rack-cors (~> 2.0)
+  rack-cors (~> 3.0)
   rails (~> 8.0.2)
   rspec-rails (~> 7.1)
   rswag

@@ -45,7 +45,7 @@ gem "devise", "~> 4.9"
 gem "devise_token_auth", "~> 1.2"
 
 # Cors
-gem "rack-cors", "~> 2.0", require: "rack/cors"
+gem "rack-cors", "~> 3.0", require: "rack/cors"
 
 # HTTP client
 gem "httparty", "~> 0.23.1"
